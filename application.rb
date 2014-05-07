@@ -36,11 +36,11 @@ class Tester < Sinatra::Base
       token = auth_code.get_token params[:code], redirect_uri: REDIRECT_URI
       token.get('https://graph.windows.net/me?api-version=2013-04-05')
     end
-    %Q{
+    %Q{<pre style="max-width:100%;word-wrap:break-word;white-space:pre-line;">
       Logged in with token:
 
-        #{token}
-    }
+        #{token.token}
+    </pre>}
   end
 
 end
