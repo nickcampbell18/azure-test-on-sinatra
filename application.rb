@@ -1,7 +1,6 @@
-require 'dotenv'
 require 'rubygems'
 require 'bundler/setup'
-Bundler.require(:default)
+Bundler.require(:default, :development)
 Dotenv.load
 
 class Tester < Sinatra::Base
