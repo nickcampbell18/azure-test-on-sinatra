@@ -5,9 +5,6 @@ Dotenv.load
 
 class Tester < Sinatra::Base
 
-  RESOURCE = 'https://graph.windows.net'
-  REDIRECT_URI = 'http://localhost:4848/consume'
-
   def client
     OAuth2::Client.new                ENV['CLIENT_ID'],
                                       ENV['CLIENT_SECRET'],
@@ -26,14 +23,14 @@ class Tester < Sinatra::Base
   end
 
   get '/login' do
-    redirect auth_code.authorize_url redirect_uri: REDIRECT_URI,
-                                     resource:     RESOURCE
+    redirect auth_code.authorize_url redirect_uri: ENV['REDIRECT_URI'],
+                                     resource:     ENV['RESOURCE']
   end
 
   get '/consume' do
     if params[:code]
-      token = auth_code.get_token params[:code], redirect_uri: REDIRECT_URI
-      token.get('https://graph.windows.net/me?api-version=2013-04-05')
+      token = auth_code.get_token params[:code], redirect_uri: ENV['REDIRECT_URI']
+      token.get ENV['TEST_ENDPOINT']
     end
     %Q{<pre style="max-width:100%;word-wrap:break-word;white-space:pre-line;">
       Logged in with token:
